@@ -1,30 +1,14 @@
 ---
 install:
-  curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest \
- | grep "browser_download_url.*hugo_[^extended].*Linux-64bit\.tar\.gz" \
- | grep Linux-64bit.deb \
- | grep -v extended \
- | cut -d '"' -f 4 \
- | wget -i -
-    
-  tarball="$(find . -name "*macOS-64bit.tar.gz")"
-  tar -xzf $tarball
-    
-  chmod +x hugo
-    
-  mv hugo /usr/local/bin/
-    
-  popd
-    
-  location="$(which hugo)"
-
-
+  - wget -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.59.1/hugo_0.59.1_Linux-64bit.deb
+  - sudo dpkg -i /tmp/hugo.deb
 
 script:
   - hugo
+
 deploy:
   - provider: script
-    script: ./deploy.sh
+    script: bash deploy.sh
     skip_cleanup: true
     on:
-      branch: master
+      branch: source # or master if you are using the two-repository approach
