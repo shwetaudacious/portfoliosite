@@ -17,9 +17,7 @@ install:
   popd
     
   location="$(which hugo)"
-echo "Hugo binary location: $location"
-version="$(hugo version)"
-echo "Hugo binary version: $version"
+
 
 
 script:
